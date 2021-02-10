@@ -14,15 +14,11 @@ It will not migrate Git LFS.
 
 Fill in the variables...
 
-`BB_ORG`: The value here from this URL: https://bitbucket.org/${BB_ORG}
-
-`BB_USER`: Username from [this page](https://bitbucket.org/account/settings/)
-
-`BB_TOKEN`: App Password, [make one here](https://bitbucket.org/account/settings/app-passwords/).  Give it read permission for repositories.
-
-`ADO_ORG`: The Azure DevOps organiztion, URL is something like https://dev.azure.com/${ADO_ORG}
-
-`ADO_PAT`: Personal Access Token, make one here: https://dev.azure.com/${ADO_ORG}/_usersSettings/tokens.  Give it full repository permission.
+* `BB_ORG`: The value here from this URL: https://bitbucket.org/${BB_ORG}
+* `BB_USER`: Username from [this page](https://bitbucket.org/account/settings/)
+* `BB_TOKEN`: App Password, [make one here](https://bitbucket.org/account/settings/app-passwords/).  Give it read permission for repositories.
+* `ADO_ORG`: The Azure DevOps organiztion, URL is something like https://dev.azure.com/${ADO_ORG}
+* `ADO_PAT`: Personal Access Token, make one here: https://dev.azure.com/${ADO_ORG}/_usersSettings/tokens.  Give it full repository permission.
 
 ## Get the list of repositories from BitBucket
 
