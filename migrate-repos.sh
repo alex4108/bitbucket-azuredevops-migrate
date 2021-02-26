@@ -3,6 +3,17 @@ set -e
 set pipefail
 
 source .env
+ERRORS=""
+
+reportErr() { 
+	ERRORS="${ERRORS} $1"
+}
+
+chkErr() { 
+	if [[ "$?" == "1" ]]; then
+		reportErr $1
+	fi
+}
 
 if [[ "${ADO_ORG}" == "" ]]; then
 	echo "ERROR ADO_ORG variable is not set."
@@ -28,11 +39,13 @@ createAdoProject() {
 
 	if [[ "${errorMsg}" != "null" ]]; then
 		echo "ERROR Creating repository $1 in project ${proj_id}"
-		exit 1
+		reportErr $1
+		return
 	fi
 
 	repo_url=$(echo ${output} | jq -r '.sshUrl')
 }
+
 
 lines=$(cat repos.csv)
 SAVEIFS=$IFS   # Save current IFS
@@ -57,11 +70,30 @@ do
 	createAdoProject ${sourceFolder}
 
 	cd ${sourceFolder}
+	# Fetch all branches https://stackoverflow.com/questions/67699/how-to-clone-all-remote-branches-in-git
+	for branch in $(git branch --all | grep '^\s*remotes' | egrep --invert-match '(:?HEAD|master)$'); do
+	    git branch --track "${branch##*/}" "$branch"
+	done
+	git fetch --all
+	chkErr ${line}
+	git pull --all
+	chkErr ${line}
+
 	git remote rm origin
+	chkErr ${line}
 	git remote add origin ${repo_url}
+	chkErr ${line}
 	git push -u origin --all
+	chkErr ${line}
+	git push --tags
+	chkErr ${line}
 	cd ../
-	
-	rm -rf ${sourceFolder}
+
+	#rm -rf ${sourceFolder}
 done
 
+if [[ "${ERRORS}" == "" ]]; then
+	echo "No errors reported during migration.  Huzzah!"
+else
+	echo "The following projects reported errors during migration, please review the output: ${ERRORS}"
+fi
