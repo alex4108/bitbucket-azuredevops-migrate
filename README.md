@@ -50,6 +50,18 @@ bash migrate-repos.sh
 
 This will create the repository using Azure Devops REST API, and push the repo to Azure Devops
 
+## Did something not work right?  Undo?? CTRL-Z???
+
+If you somehow didn't get your mapping quite right, or otherwise some catastrophe happened, you can clear repos from the Azure DevOps org with the below script.
+
+The script will delete all repos as mapped in repos.csv.  You can reduce repos.csv before running this to limit the blast radius of the deletion.
+
+The script requires an additional flag `--delete` to actually delete the repos.  Otherwise, it will simply list the repos it's about to delete.
+
+```
+bash delete-repos-devops.sh
+```
+
 # Project Sample
 
 You can check out the `repos.sample.csv` for an example of what the final mapping file should look like
