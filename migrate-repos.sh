@@ -125,7 +125,6 @@ do
 		rm -rf ${sourceFolder}
 	fi
 	total=$((${total}+1))
-	exit 0
 done
 
 info "Done!"
