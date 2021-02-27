@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 set -e
 set pipefail
-set -x
 
 source common.sh
 source .env

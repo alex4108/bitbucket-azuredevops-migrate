@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -e
-set -x
+
 # If you really hosed something, use this to delete all repos found in repos.csv
 # From azure devops!
 source common.sh
